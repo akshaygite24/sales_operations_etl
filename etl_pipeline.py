@@ -10,3 +10,7 @@ DATA_FILE = "data/Superstore.csv"
 
 def extract():
     logging.info("Extracting dataset...")
+    df = pd.read_csv(DATA_FILE)
+    logging.info(f"Extracted {len(df)} rows.")
+    return df
+
