@@ -46,10 +46,20 @@ def transform(df):
     logging.info("Transformation complete.")
     return df, monthly_sales, region_sales, category_perf
 
+def load(df, monthly_sales, region_sales, category_perf):
+    logging.info("Loading data into database...")
+    engine = create_engine(DB_URL)
+    df.to_sql("sales_raw", engine, if_exists="replace", index=False)
+    monthly_sales.to_sql("monthly_sales", engine, if_exists="replace", index=False)
+    region_sales.to_sql("region_sales", engine, if_exists="replace", index=False)
+    category_perf.to_sql("category_performance", engine, if_exists="replace", index=False)
+    logging.info("Data loaded successfully into SQLite.")
+    
+
 def run_pipeline():
     df = extract()
     df_clean, monthly_sales, region_sales, category_perf =  transform(df)
-
+    load(df_clean, monthly_sales, region_sales, category_perf)
 
 if __name__ == "__main__":
     run_pipeline()
