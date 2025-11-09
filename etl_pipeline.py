@@ -10,7 +10,7 @@ DATA_FILE = "data/Superstore.csv"
 
 def extract():
     logging.info("Extracting dataset...")
-    df = pd.read_csv(DATA_FILE)
+    df = pd.read_csv(DATA_FILE, encoding="latin1")
     logging.info(f"Extracted {len(df)} rows.")
     return df
 
@@ -25,7 +25,7 @@ def transform(df):
     df["delivery_days"] = (df["ship_date"] - df["order_date"]).dt.days
     df["order_month"] = df["order_date"].dt.to_period("M").astype(str)
 
-    monthly_sales = df.group("order_month").agg(
+    monthly_sales = df.groupby("order_month").agg(
         total_sales = ("sales", "sum"),
         total_profit = ("profit", "sum"),
         avg_margin = ("profit_margin", "mean"),
