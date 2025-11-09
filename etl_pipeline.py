@@ -27,8 +27,8 @@ def transform(df):
 
     monthly_sales = df.group("order_month").agg(
         total_sales = ("sales", "sum"),
-        total_profit = ("profit", "sum")
-        avg_margin = ("profit_margin", "mean")
+        total_profit = ("profit", "sum"),
+        avg_margin = ("profit_margin", "mean"),
         avg_delivery = ("delivery_days", "mean")
     ).reset_index()
 
@@ -54,12 +54,13 @@ def load(df, monthly_sales, region_sales, category_perf):
     region_sales.to_sql("region_sales", engine, if_exists="replace", index=False)
     category_perf.to_sql("category_performance", engine, if_exists="replace", index=False)
     logging.info("Data loaded successfully into SQLite.")
-    
+
 
 def run_pipeline():
     df = extract()
     df_clean, monthly_sales, region_sales, category_perf =  transform(df)
     load(df_clean, monthly_sales, region_sales, category_perf)
+    logging.info("ETL Pipeline completed successfully!")
 
 if __name__ == "__main__":
     run_pipeline()
