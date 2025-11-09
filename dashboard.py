@@ -18,12 +18,12 @@ col1.metric("Total Sales", f"${monthly["total_sales"].sum():,.2f}")
 col2.metric("Total Profit", f"${monthly["total_profit"].sum():,.2f}")
 
 st.subheader("Monthly Sales Trend")
-st.plotly_chart(px.line(monthly, x="order_month", y="total_sales", title="Monthly Sales Over Time"), use_container_width=True)
+st.plotly_chart(px.line(monthly, x="order_month", y="total_sales", title="Monthly Sales Over Time"), width="stretch")
 
 st.subheader("Regional Performance")
-st.plotly_chart(px.bar(region, x="region", y="total_sales", color="region", title="Total Sales by Region"), use_container_width=True)
+st.plotly_chart(px.bar(region, x="region", y="total_sales", color="region", title="Total Sales by Region"), width="stretch")
 
 st.subheader("Category Profitability")
-st.plotly_chart(px.scatter(category, x="total_sales", y="total_profit", size="avg_discount", color="category", title="Category Profitability"), use_container_width=True)
+st.plotly_chart(px.scatter(category, x="total_sales", y="total_profit", size="avg_discount", color="category", title="Category Profitability"), width="stretch")
 
 st.caption("Dataset: Gloabal Superstore (Kaggle)")
